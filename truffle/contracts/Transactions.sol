@@ -18,7 +18,7 @@ contract Transactions {
     mapping(uint => txns) public transactions;
     uint public txnCount = 0;
     
-    constructor(address _creator) public {
+    constructor(address _creator)  {
         Creator = _creator;
     }
     
