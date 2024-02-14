@@ -11,43 +11,49 @@ import QueryStatsRoundedIcon from "@mui/icons-material/QueryStatsRounded";
 import SettingsSuggestRoundedIcon from "@mui/icons-material/SettingsSuggestRounded";
 import SupportAgentRoundedIcon from "@mui/icons-material/SupportAgentRounded";
 import ThumbUpAltRoundedIcon from "@mui/icons-material/ThumbUpAltRounded";
-
+import { Link } from "react-router-dom";
 const items = [
   {
     icon: <SettingsSuggestRoundedIcon />,
-    title: "Adaptable performance",
+    title: "Owner",
     description:
       "Our product effortlessly adjusts to your needs, boosting efficiency and simplifying your tasks.",
+    link: "/owner",
   },
   {
     icon: <ConstructionRoundedIcon />,
-    title: "Built to last",
+    title: "Supplier",
     description:
       "Experience unmatched durability that goes above and beyond with lasting investment.",
+    link: "/supplier",
   },
   {
     icon: <ThumbUpAltRoundedIcon />,
-    title: "Great user experience",
+    title: "Transporter",
     description:
       "Integrate our product into your routine with an intuitive and easy-to-use interface.",
+    link: "/transporter",
   },
   {
     icon: <AutoFixHighRoundedIcon />,
-    title: "Innovative functionality",
+    title: "Manufacturer",
     description:
       "Stay ahead with features that set new standards, addressing your evolving needs better than the rest.",
+    link: "/manufacturer",
   },
   {
     icon: <SupportAgentRoundedIcon />,
-    title: "Reliable support",
+    title: "Wholesaler",
     description:
       "Count on our responsive customer support, offering assistance that goes beyond the purchase.",
+    link: "/wholesaler",
   },
   {
     icon: <QueryStatsRoundedIcon />,
-    title: "Precision in every detail",
+    title: "Distributor",
     description:
       "Enjoy a meticulously crafted product where small touches make a significant impact on your overall experience.",
+    link: "/distributor",
   },
 ];
 
@@ -92,7 +98,8 @@ export default function Highlights() {
               <Stack
                 direction="column"
                 color="inherit"
-                component={Card}
+                component={Link}
+                to={item.link}
                 spacing={1}
                 useFlexGap
                 sx={{
@@ -102,6 +109,11 @@ export default function Highlights() {
                   borderColor: "grey.800",
                   background: "transparent",
                   backgroundColor: "grey.900",
+                  textDecoration: "none",
+                  color: "inherit",
+                  "&:hover": {
+                    backgroundColor: "grey.800",
+                  },
                 }}
               >
                 <Box sx={{ opacity: "50%" }}>{item.icon}</Box>

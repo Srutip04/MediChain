@@ -19,7 +19,7 @@ contract MedicineW_D {
         address Sender,
         address Transporter,
         address Receiver
-    ) public {
+    ){
         Owner = Sender;
         medId = _address;
         sender = Sender;
@@ -35,7 +35,7 @@ contract MedicineW_D {
     ) public {
         require(
             transporter == _transporter,
-            "Only Associated shipper can call this function."
+            "OAssociatedshipper"
         );
         status = packageStatus(1);
 
@@ -51,7 +51,7 @@ contract MedicineW_D {
     ) public {
         require(
             Receiver == receiver,
-            "Only Associated receiver can call this function."
+            "OAssociatedreceiver"
         );
         status = packageStatus(2);
 

@@ -1,13 +1,14 @@
 import { EthProvider } from "./contexts/EthContext";
 import LandingPage from "./components/Home/LandingPage";
-
+import { Routes,Route } from "react-router-dom";
 function App() {
   return (
     <EthProvider>
       <div id="App">
-        <div className="container">
-         <LandingPage/>
-        </div>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="*" element={<LandingPage/>}/>
+        </Routes>         
       </div>
     </EthProvider>
   );

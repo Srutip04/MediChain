@@ -34,7 +34,7 @@ contract RawMaterial {
         uint _quantity,
         address _transporterAddr,
         address _manufacturerAddr
-    ) public {
+    ){
         Owner = _creatorAddr;
         productid = _productid;
         description = _description;
@@ -75,11 +75,11 @@ contract RawMaterial {
     ) public {
         require(
             _transporterAddr == transporter,
-            "Only transporter of the package can pick package"
+            "Otranscanpickpackage"
         );
         require(
             status == packageStatus(0),
-            "Package must be at Supplier."
+            "PkmustbeatSupp"
         );
         status = packageStatus(1);
         emit ShippmentUpdate(productid, transporter, manufacturer, 1, 1);

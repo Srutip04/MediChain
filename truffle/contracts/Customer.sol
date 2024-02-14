@@ -15,36 +15,20 @@ contract Customer {
         damaged
     }
 
-    event MedicineStatus(
-        address _address,
-        address indexed Customer,
-        uint status
-    );
+    event MedicineStatus(address _address,address indexed Customer,uint status);
 
-    function medicineRecievedAtCustomer(
-        address _address,
-        address cid
-    ) public {
+    function medicineRecievedAtCustomer(address _address,address cid) public {
         MedicineD_C(cid).receiveDC(_address, msg.sender);
         MedicineBatchAtCustomer[msg.sender].push(_address);
         sale[_address] = salestatus(1);
     }
 
-    function updateSaleStatus(
-        address _address,
-        uint Status
-    ) public {
+    function updateSaleStatus(address _address,uint Status) public {
         sale[_address] = salestatus(Status);
         emit MedicineStatus(_address, msg.sender, Status);
     }
 
-    function salesInfo(
-        address _address
-    ) public
-    view
-    returns(
-        uint Status
-    ){
+    function salesInfo(address _address) public view returns( uint Status){
         return uint(sale[_address]);
     }
 

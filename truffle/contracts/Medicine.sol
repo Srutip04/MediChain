@@ -44,7 +44,7 @@ contract Medicine {
         address[] memory _transporterAddr,
         address _receiverAddr,
         uint RcvrType
-    ) public {
+    ){
         Owner = _manufacturerAddr;
         manufacturer = _manufacturerAddr;
         description = _description;
@@ -102,11 +102,11 @@ contract Medicine {
     ) public {
         require(
             _transporterAddr == transporters[transporters.length - 1],
-            "Only Transporter can call this function"
+            "OT"
         );
         require(
             status == medicineStatus(0),
-            "Package must be at Manufacturer."
+            "Pk must be at M."
         );
 
         if(wholesaler != address(0x0)){
@@ -131,12 +131,12 @@ contract Medicine {
 
         require(
             _receiverAddr == wholesaler || _receiverAddr == distributor,
-            "Only Wholesaler or Distributor can call this function"
+            "O W/D"
         );
 
         require(
             uint(status) >= 1,
-            "Product not picked up yet"
+            "not picked"
         );
 
         if(_receiverAddr == wholesaler && status == medicineStatus(1)){
@@ -157,7 +157,7 @@ contract Medicine {
     ) public {
         require(
             wholesaler == sender,
-            "this Wholesaler is not Associated."
+            "WnotAssociated"
         );
         distributor = receiver;
         status = medicineStatus(2);
@@ -169,7 +169,7 @@ contract Medicine {
     ) public {
         require(
             distributor == receiver,
-            "This Distributor is not Associated."
+            "DntAssociated"
         );
         status = medicineStatus(4);
     }
@@ -181,7 +181,7 @@ contract Medicine {
     ) public {
         require(
             distributor == sender,
-            "This Distributor is not Associated."
+            "DntAssociated"
         );
         customer = receiver;
         status = medicineStatus(5);
@@ -193,7 +193,7 @@ contract Medicine {
     ) public {
         require(
             customer == receiver,
-            "This Customer is not Associated."
+            "CntAssociated"
         );
         status = medicineStatus(6);
     }
