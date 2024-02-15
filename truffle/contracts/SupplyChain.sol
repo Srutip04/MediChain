@@ -275,57 +275,57 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
     ///////////////  Customer  ///////////////
     
     
-    function customerReceivedMedicine(
-        address _address,
-        address cid
-    ) external {
-        require(
-            userInfo[msg.sender].role == roles.customer,
-            "Only Customer"
-        );
-        medicineRecievedAtCustomer(_address, cid);
-    }
+    // function customerReceivedMedicine(
+    //     address _address,
+    //     address cid
+    // ) external {
+    //     require(
+    //         userInfo[msg.sender].role == roles.customer,
+    //         "Only Customer"
+    //     );
+    //     medicineRecievedAtCustomer(_address, cid);
+    // }
 
-    function updateStatus(
-        address _address,
-        uint Status
-    ) external {
-        require(
-            userInfo[msg.sender].role == roles.customer &&
-            msg.sender == Medicine(_address).getWDC()[2],
-            "Only Customer or current owner of package"
-        );
-        require(sale[_address] == salestatus(1), "Medicine Must be at Customer");
+    // function updateStatus(
+    //     address _address,
+    //     uint Status
+    // ) external {
+    //     require(
+    //         userInfo[msg.sender].role == roles.customer &&
+    //         msg.sender == Medicine(_address).getWDC()[2],
+    //         "Only Customer or current owner of package"
+    //     );
+    //     require(sale[_address] == salestatus(1), "Medicine Must be at Customer");
         
-        updateSaleStatus(_address, Status);
-    }
+    //     updateSaleStatus(_address, Status);
+    // }
 
-    function getSalesInfo(
-        address _address
-    ) external
-    view
-    returns(
-        uint Status 
-    ){
-        return salesInfo(_address);
-    }
+    // function getSalesInfo(
+    //     address _address
+    // ) external
+    // view
+    // returns(
+    //     uint Status 
+    // ){
+    //     return salesInfo(_address);
+    // }
 
     
-    function getBatchesCountC() external view returns(uint count) {
-        require(
-            userInfo[msg.sender].role == roles.customer,
-            "Only Wholesaler or current owner of package "
-        );
-        return  MedicineBatchAtCustomer[msg.sender].length;
-    }
+    // function getBatchesCountC() external view returns(uint count) {
+    //     require(
+    //         userInfo[msg.sender].role == roles.customer,
+    //         "Only Wholesaler or current owner of package "
+    //     );
+    //     return  MedicineBatchAtCustomer[msg.sender].length;
+    // }
 
-    function getBatchIdByIndexC(uint index) external view returns(address _address) {
-        require(
-            userInfo[msg.sender].role == roles.customer,
-            "Only Wholesaler or current owner of package"
-        );
-        return MedicineBatchAtCustomer[msg.sender][index];
-    }
+    // function getBatchIdByIndexC(uint index) external view returns(address _address) {
+    //     require(
+    //         userInfo[msg.sender].role == roles.customer,
+    //         "Only Wholesaler or current owner of package"
+    //     );
+    //     return MedicineBatchAtCustomer[msg.sender][index];
+    // }
     
     // function verify(address p, bytes32 hash, uint8 v, bytes32 r, bytes32 s) external view returns(bool) {
     //     return ecrecover(hash, v, r, s) == p;

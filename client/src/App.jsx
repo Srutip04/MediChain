@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import Web3 from "web3";
 import SupplyChain from "./contracts/SupplyChain.json";
 import LandingPage from "./components/Home/LandingPage";
-import { Routes,Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+
 function App() {
   const [account, setAccount] = useState(null);
   const [supplyChain, setSupplyChain] = useState(null);
