@@ -34,7 +34,7 @@ contract MedicineD_C {
     ) public {
         require(
             transporter == transporterAddr,
-            "OAssociatedT"
+            "Only Associated transporter can call this function."
         );
         status = packageStatus(1);
 
@@ -51,7 +51,7 @@ contract MedicineD_C {
     ) public {
         require(
             Receiver == receiver,
-            "OAssociatedRe"
+            "Only Associated receiver can call this function."
         );
         status = packageStatus(2);
         Medicine(_address).receivedDtoC(
@@ -59,7 +59,9 @@ contract MedicineD_C {
         );
     }
 
-    function get_addressStatus() public view returns(uint) {
+    function get_addressStatus() public view returns(
+        uint
+    ) {
         return uint(status);
     }
 
