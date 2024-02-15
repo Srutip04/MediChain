@@ -59,9 +59,7 @@ contract MedicineD_C {
         );
     }
 
-    function get_addressStatus() public view returns(
-        uint
-    ) {
+    function get_addressStatus() public view returns(uint) {
         return uint(status);
     }
 

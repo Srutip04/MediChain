@@ -36,15 +36,7 @@ contract Medicine {
     );
 
 
-    constructor(
-        address _manufacturerAddr,
-        bytes32 _description,
-        address[] memory _rawAddr,
-        uint _quantity,
-        address[] memory _transporterAddr,
-        address _receiverAddr,
-        uint RcvrType
-    ){
+    constructor(address _manufacturerAddr,bytes32 _description,address[] memory _rawAddr,uint _quantity,address[] memory _transporterAddr,address _receiverAddr,uint RcvrType){
         Owner = _manufacturerAddr;
         manufacturer = _manufacturerAddr;
         description = _description;
@@ -61,53 +53,25 @@ contract Medicine {
     }
 
 
-    function getMedicineInfo () public view returns(
-        address _manufacturerAddr,
-        bytes32 _description,
-        address[] memory _rawAddr,
-        uint _quantity,
-        address[] memory _transporterAddr,
-        address _distributor,
-        address _customer
-    ) {
-        return(
-            manufacturer,
-            description,
-            rawMaterials,
-            quantity,
-            transporters,
-            distributor,
-            customer
-        );
+    function getMedicineInfo () public view returns(address _manufacturerAddr,bytes32 _description,address[] memory _rawAddr,uint _quantity,address[] memory _transporterAddr,address _distributor,address _customer) {
+        return(manufacturer,description,rawMaterials,quantity,transporters,distributor,customer);
     }
 
  
-    function getWDC() public view returns(
-        address[3] memory WDP
-    ) {
+    function getWDC() public view returns(address[3] memory WDP) {
         return (
             [wholesaler, distributor, customer]
         );
     }
 
-    function getBatchIDStatus() public view returns(
-        uint
-    ) {
+    function getBatchIDStatus() public view returns(uint) {
         return uint(status);
     }
 
 
-    function pickMedicine(
-        address _transporterAddr
-    ) public {
-        require(
-            _transporterAddr == transporters[transporters.length - 1],
-            "OT"
-        );
-        require(
-            status == medicineStatus(0),
-            "Pk must be at M."
-        );
+    function pickMedicine(address _transporterAddr) public {
+        require(_transporterAddr == transporters[transporters.length - 1],"OT");
+        require(status == medicineStatus(0),"Pk must be at M.");
 
         if(wholesaler != address(0x0)){
             status = medicineStatus(1);
@@ -123,21 +87,10 @@ contract Medicine {
     }
 
 
-    function receivedMedicine(
-        address _receiverAddr
-    ) public
-    returns(uint)
-    {
+    function receivedMedicine(address _receiverAddr) public returns(uint){
+        require( _receiverAddr == wholesaler || _receiverAddr == distributor,"O W/D");
 
-        require(
-            _receiverAddr == wholesaler || _receiverAddr == distributor,
-            "O W/D"
-        );
-
-        require(
-            uint(status) >= 1,
-            "not picked"
-        );
+        require(uint(status) >= 1,"not picked");
 
         if(_receiverAddr == wholesaler && status == medicineStatus(1)){
             status = medicineStatus(3);
@@ -151,10 +104,7 @@ contract Medicine {
     }
 
 
-    function sendWtoD(
-        address receiver,
-        address sender
-    ) public {
+    function sendWtoD(address receiver,address sender) public {
         require(
             wholesaler == sender,
             "WnotAssociated"
@@ -164,37 +114,21 @@ contract Medicine {
     }
 
 
-    function receivedWtoD(
-        address receiver
-    ) public {
-        require(
-            distributor == receiver,
-            "DntAssociated"
-        );
+    function receivedWtoD(address receiver) public {
+        require(distributor == receiver,"DntAssociated");
         status = medicineStatus(4);
     }
 
 
-    function sendDtoC(
-        address receiver,
-        address sender
-    ) public {
-        require(
-            distributor == sender,
-            "DntAssociated"
-        );
+    function sendDtoC(address receiver,address sender) public {
+        require( distributor == sender,"DntAssociated");
         customer = receiver;
         status = medicineStatus(5);
     }
 
 
-    function receivedDtoC(
-        address receiver
-    ) public {
-        require(
-            customer == receiver,
-            "CntAssociated"
-        );
+    function receivedDtoC(address receiver) public {
+        require(customer == receiver,"CntAssociated");
         status = medicineStatus(6);
     }
 }
