@@ -3,12 +3,14 @@ import React, { useState, useEffect } from "react";
 import Web3 from "web3";
 import SupplyChain from "./contracts/SupplyChain.json";
 import LandingPage from "./components/Home/LandingPage";
+import Owner from "./entities/Owner/Owner";
+import Manufacturer from "./entities/Manufacturer/Manufacturer";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
   const [account, setAccount] = useState(null);
   const [supplyChain, setSupplyChain] = useState(null);
-  const [identicon, setIdenticon] = useState(null);
+  // const [identicon, setIdenticon] = useState(null);
   const [loading, setLoading] = useState(true);
   const [web3, setWeb3] = useState(null);
 
@@ -59,13 +61,32 @@ function App() {
 
   return (
     // <EthProvider>
-     loading ? <div>Loding</div> :
+    loading ? (
+      <div>Loding</div>
+    ) : (
       <div id="App">
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="*" element={<LandingPage/>}/>
-        </Routes>         
+          <Route
+            path="/owner"
+            element={
+              <Owner account={account} supplyChain={supplyChain} web3={web3} />
+            }
+          />
+          <Route
+            path="/manufacturer"
+            element={
+              <Manufacturer
+                account={account}
+                supplyChain={supplyChain}
+                web3={web3}
+              />
+            }
+          />
+          <Route path="*" element={<LandingPage />} />
+        </Routes>
       </div>
+    )
     // </EthProvider>
   );
 }
