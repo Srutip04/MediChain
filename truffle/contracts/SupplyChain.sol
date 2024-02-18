@@ -1,35 +1,33 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
+import "openzeppelin-contracts/access/Ownable.sol";
 
-contract SupplyChain{
-    address public owner;
-
-    constructor(){
-        owner = msg.sender;
-    }
-
-    // Define modifier to restrict access to owner-only
-    modifier onlyOwner() {
-        require(msg.sender == owner);
-        _;
-    }
-
+contract SupplyChain is Ownable{
+   
+    uint public userCnt = 0;
+    uint public prodCnt = 0;
+    uint public shipmentCnt = 0;
     // Define Role enum
     enum Role {None, Manufacturer, Distributor, Retailer}
 
     // Define User struct
     struct User {
+        uint userId;
+        address addr;
         string name;
         Role role;
     }
 
     // Define mapping to store users
     mapping(address => User) public users;
-    
+    mapping(uint => User) public uids;
     //function to add users 
     function registerUser(address _userAddress, string memory _name, Role _role) public onlyOwner{
-        users[_userAddress] = User(_name,_role);
+        userCnt++;
+        users[_userAddress] = User(userCnt,_userAddress,_name,_role);
+        uids[userCnt] = User(userCnt,_userAddress,_name,_role);
+
     }
 
     //get user details
@@ -40,6 +38,8 @@ contract SupplyChain{
     //Define product struct
     struct Product{
         string name;
+        uint pid;
+        uint phash;
         uint batchNumber;
         uint manufacturingDate;
         uint expiryDate;
@@ -49,7 +49,7 @@ contract SupplyChain{
     
     // Define mapping to store products
     mapping(uint => Product) public products;
-
+  
     // Function to create pharmaceutical product
     function createProduct(
         string memory _name,
@@ -58,13 +58,17 @@ contract SupplyChain{
         uint _expiryDate,
         uint _price
     ) public returns (uint) {
+
         require(users[msg.sender].role == Role.Manufacturer, "Only manufacturer can create product");
-        uint productId = uint(keccak256(abi.encodePacked(msg.sender, _batchNumber, _expiryDate))); // Generate unique product ID
-        products[productId] = Product(_name, _batchNumber, _manufacturingDate, _expiryDate, _price, msg.sender);
-        return productId;
+        prodCnt++;
+        uint phash = uint(keccak256(abi.encodePacked(msg.sender, _batchNumber, _expiryDate))); // Generate unique product ID
+        products[prodCnt] = Product(_name,prodCnt,phash, _batchNumber, _manufacturingDate, _expiryDate, _price, msg.sender);
+        return prodCnt;
     }
 
     struct Shipment {
+        uint shipmentId;
+        uint shiphash;
         uint productId;
         address fromAddress;
         address toAddress;
@@ -80,10 +84,11 @@ contract SupplyChain{
     function initiateShipment(uint _productId, address _toAddress) public returns (uint) {
         require(users[msg.sender].role == Role.Manufacturer, "Only manufacturer can initiate shipment");
         require(products[_productId].manufacturingDate != 0, "Product does not exist");
-        uint shipmentId = uint(keccak256(abi.encodePacked(msg.sender, _productId, _toAddress))); // Generate unique shipment ID
-        require(shipments[shipmentId].shipmentStatus == 0, "Shipment already initiated");
-        shipments[shipmentId] = Shipment(_productId, msg.sender, _toAddress, 1,products[_productId].price);
-        return shipmentId;
+        shipmentCnt++;
+        uint shiphash = uint(keccak256(abi.encodePacked(msg.sender, _productId, _toAddress))); // Generate unique shipment ID
+        require(shipments[shipmentCnt].shipmentStatus == 0, "Shipment already initiated");
+        shipments[shipmentCnt] = Shipment(shipmentCnt,shiphash,_productId, msg.sender, _toAddress, 1,products[_productId].price);
+        return shipmentCnt;
     }
 
      // Function for distributor to receive shipment
