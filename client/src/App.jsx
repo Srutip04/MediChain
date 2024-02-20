@@ -5,7 +5,9 @@ import SupplyChain from "./contracts/SupplyChain.json";
 import LandingPage from "./components/Home/LandingPage";
 import Owner from "./entities/Owner/Owner";
 import Manufacturer from "./entities/Manufacturer/Manufacturer";
+import ShipmentList from "./entities/Distributor/ShipmentList";
 import { Routes, Route } from "react-router-dom";
+import ReceiveShipment from "./entities/Retailer/ReceiveShipment";
 
 function App() {
   const [account, setAccount] = useState(null);
@@ -77,6 +79,26 @@ function App() {
             path="/manufacturer"
             element={
               <Manufacturer
+                account={account}
+                supplyChain={supplyChain}
+                web3={web3}
+              />
+            }
+          />
+          <Route
+            path="/distributor"
+            element={
+              <ShipmentList
+                account={account}
+                supplyChain={supplyChain}
+                web3={web3}
+              />
+            }
+          />
+          <Route
+            path="/retailer"
+            element={
+              <ReceiveShipment
                 account={account}
                 supplyChain={supplyChain}
                 web3={web3}
