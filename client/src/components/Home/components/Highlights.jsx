@@ -43,10 +43,10 @@ const items = [
   },
   {
     icon: <SupportAgentRoundedIcon />,
-    title: "Wholesaler",
+    title: "Retailer",
     description:
       "Count on our responsive customer support, offering assistance that goes beyond the purchase.",
-    link: "/wholesaler",
+    link: "/retailer",
   },
   {
     icon: <QueryStatsRoundedIcon />,
