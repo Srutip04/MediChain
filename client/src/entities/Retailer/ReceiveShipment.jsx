@@ -1,4 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { styled } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  backgroundColor: theme.palette.common.black,
+  color: theme.palette.common.white,
+}));
 
 const ReceiveShipment = (props) => {
   console.log("acc:", props.account);
@@ -20,6 +34,7 @@ const ReceiveShipment = (props) => {
     }
     setShipments(fetchedShipments);
   };
+
   const receiveShipment = async (shipmentId) => {
     try {
       await supplyChain.methods
@@ -33,50 +48,55 @@ const ReceiveShipment = (props) => {
       alert("An error occurred while receiving the shipment.");
     }
   };
- return (
-   <div>
-     <h2>Shipment List</h2>
-     <table>
-       <thead>
-         <tr>
-           <th>Shipment ID</th>
-           <th>Product ID</th>
-           <th>From Address</th>
-           <th>To Address</th>
-           <th>Shipment Status</th>
-           <th>Total Amount</th>
-           <th>Action</th>
-         </tr>
-       </thead>
-       <tbody>
-         {shipments.map((shipment) => (
-           <tr key={shipment.shipmentId}>
-             <td>{shipment.shipmentId}</td>
-             <td>{shipment.productId}</td>
-             <td>{shipment.fromAddress}</td>
-             <td>{shipment.toAddress}</td>
-             <td>
-               {" "}
-               {shipment.shipmentStatus == 0
-                 ? "Not initiated"
-                 : shipment.shipmentStatus == 1
-                 ? "In transit"
-                 : "Delivered"}
-             </td>
-             <td>{shipment.totalAmount}</td>
-             <td>
-               {shipment.shipmentStatus == 1 && (
-                 <button onClick={() => receiveShipment(shipment.shipmentId)}>
-                   Receive Shipment
-                 </button>
-               )}
-             </td>
-           </tr>
-         ))}
-       </tbody>
-     </table>
-   </div>
- );
+
+  return (
+    <div>
+      <h2>Shipment List</h2>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Shipment ID</StyledTableCell>
+              <StyledTableCell>Product ID</StyledTableCell>
+              <StyledTableCell>From Address</StyledTableCell>
+              <StyledTableCell>To Address</StyledTableCell>
+              <StyledTableCell>Shipment Status</StyledTableCell>
+              <StyledTableCell>Total Amount</StyledTableCell>
+              <StyledTableCell>Action</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {shipments.map((shipment) => (
+              <TableRow key={shipment.shipmentId}>
+                <TableCell>{shipment.shipmentId}</TableCell>
+                <TableCell>{shipment.productId}</TableCell>
+                <TableCell>{shipment.fromAddress}</TableCell>
+                <TableCell>{shipment.toAddress}</TableCell>
+                <TableCell>
+                  {shipment.shipmentStatus == 0
+                    ? "Not initiated"
+                    : shipment.shipmentStatus == 1
+                    ? "In transit"
+                    : "Delivered"}
+                </TableCell>
+                <TableCell>{shipment.totalAmount}</TableCell>
+                <TableCell>
+                  {shipment.shipmentStatus == 1 && (
+                    <Button
+                      variant="contained"
+                      onClick={() => receiveShipment(shipment.shipmentId)}
+                    >
+                      Receive Shipment
+                    </Button>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
+  );
 };
 
 export default ReceiveShipment;

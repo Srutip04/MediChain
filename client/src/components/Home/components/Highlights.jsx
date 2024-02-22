@@ -27,13 +27,13 @@ const items = [
       "Experience unmatched durability that goes above and beyond with lasting investment.",
     link: "/supplier",
   },
-  {
-    icon: <ThumbUpAltRoundedIcon />,
-    title: "Transporter",
-    description:
-      "Integrate our product into your routine with an intuitive and easy-to-use interface.",
-    link: "/transporter",
-  },
+  // {
+  //   icon: <ThumbUpAltRoundedIcon />,
+  //   title: "Transporter",
+  //   description:
+  //     "Integrate our product into your routine with an intuitive and easy-to-use interface.",
+  //   link: "/transporter",
+  // },
   {
     icon: <AutoFixHighRoundedIcon />,
     title: "Manufacturer",
@@ -84,13 +84,13 @@ export default function Highlights() {
           }}
         >
           <Typography component="h2" variant="h4">
-            Highlights
+            Entities
           </Typography>
-          <Typography variant="body1" sx={{ color: "grey.400" }}>
+          {/* <Typography variant="body1" sx={{ color: "grey.400" }}>
             Explore why our product stands out: adaptability, durability,
             user-friendly design, and innovation. Enjoy reliable customer
             support and precision in every detail.
-          </Typography>
+          </Typography> */}
         </Box>
         <Grid container spacing={2.5}>
           {items.map((item, index) => (
@@ -118,12 +118,12 @@ export default function Highlights() {
               >
                 <Box sx={{ opacity: "50%" }}>{item.icon}</Box>
                 <div>
-                  <Typography fontWeight="medium" gutterBottom>
+                  <Typography fontWeight="medium" variant="h4" gutterBottom>
                     {item.title}
                   </Typography>
-                  <Typography variant="body2" sx={{ color: "grey.400" }}>
+                  {/* <Typography variant="body2" sx={{ color: "grey.400" }}>
                     {item.description}
-                  </Typography>
+                  </Typography> */}
                 </div>
               </Stack>
             </Grid>

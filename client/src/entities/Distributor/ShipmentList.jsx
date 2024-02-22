@@ -1,12 +1,26 @@
-import React,{useState,useEffect} from 'react'
-import ShipmentItem from './ShipmentItem';
+import React, { useState, useEffect } from "react";
+import { styled } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import ShipmentItem from "./ShipmentItem";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  backgroundColor: theme.palette.common.black,
+  color: theme.palette.common.white,
+}));
+
 const ShipmentList = (props) => {
   console.log("acc:", props.account);
   const [account] = useState(props.account);
   const [web3, setWeb3] = useState(props.web3);
   const [supplyChain] = useState(props.supplyChain);
   const [shipments, setShipments] = useState([]);
-  
+
   useEffect(() => {
     fetchShipments();
   }, [supplyChain]); // Fetch shipments when contract changes
@@ -20,7 +34,7 @@ const ShipmentList = (props) => {
     }
     setShipments(fetchedShipments);
   };
-  
+
   const processShipment = async (shipmentId) => {
     try {
       await supplyChain.methods
@@ -38,30 +52,32 @@ const ShipmentList = (props) => {
   return (
     <div>
       <h2>Shipment List</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Shipment ID</th>
-            <th>Product ID</th>
-            <th>From Address</th>
-            <th>To Address</th>
-            <th>Shipment Status</th>
-            <th>Total Amount</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {shipments.map((shipment) => (
-            <ShipmentItem
-              key={shipment.shipmentId}
-              shipment={shipment}
-              onProcessShipment={processShipment}
-            />
-          ))}
-        </tbody>
-      </table>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Shipment ID</StyledTableCell>
+              <StyledTableCell>Product ID</StyledTableCell>
+              <StyledTableCell>From Address</StyledTableCell>
+              <StyledTableCell>To Address</StyledTableCell>
+              <StyledTableCell>Shipment Status</StyledTableCell>
+              <StyledTableCell>Total Amount</StyledTableCell>
+              <StyledTableCell>Action</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {shipments.map((shipment) => (
+              <ShipmentItem
+                key={shipment.shipmentId}
+                shipment={shipment}
+                onProcessShipment={processShipment}
+              />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
-}
+};
 
-export default ShipmentList
+export default ShipmentList;

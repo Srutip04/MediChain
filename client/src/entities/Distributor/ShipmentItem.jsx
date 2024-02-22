@@ -1,45 +1,35 @@
 import React from "react";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import Button from "@mui/material/Button";
 
 function ShipmentItem({ shipment, onProcessShipment }) {
   const handleProcessShipment = () => {
     onProcessShipment(shipment.shipmentId);
   };
 
-  // function getShipmentStatus(status) {
-  //   switch (status) {
-  //     case 0:
-  //       return "Not initiated";
-  //     case 1:
-  //       return "In transit";
-  //     case 2:
-  //       return "Delivered";
-  //     default:
-  //       return "Unknown";
-  //   }
-  // }
-
   return (
-    <tr>
-      <td>{shipment.shipmentId}</td>
-      <td>{shipment.productId}</td>
-      <td>{shipment.fromAddress}</td>
-      <td>{shipment.toAddress}</td>
-      <td>
+    <TableRow>
+      <TableCell>{shipment.shipmentId}</TableCell>
+      <TableCell>{shipment.productId}</TableCell>
+      <TableCell>{shipment.fromAddress}</TableCell>
+      <TableCell>{shipment.toAddress}</TableCell>
+      <TableCell>
         {shipment.shipmentStatus == 0
           ? "Not initiated"
           : shipment.shipmentStatus == 1
           ? "In transit"
           : "Delivered"}
-        {/* {shipment.shipmentStatus} */}
-        {/* {getShipmentStatus(shipment.shipmentStatus)} */}
-      </td>
-      <td>{shipment.totalAmount}</td>
-      <td>
+      </TableCell>
+      <TableCell>{shipment.totalAmount}</TableCell>
+      <TableCell>
         {shipment.shipmentStatus == 1 && (
-          <button onClick={handleProcessShipment}>Process Shipment</button>
+          <Button variant="contained" onClick={handleProcessShipment}>
+            Process Shipment
+          </Button>
         )}
-      </td>
-    </tr>
+      </TableCell>
+    </TableRow>
   );
 }
 
