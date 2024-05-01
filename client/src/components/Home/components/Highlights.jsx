@@ -27,13 +27,6 @@ const items = [
       "Experience unmatched durability that goes above and beyond with lasting investment.",
     link: "/supplier",
   },
-  // {
-  //   icon: <ThumbUpAltRoundedIcon />,
-  //   title: "Transporter",
-  //   description:
-  //     "Integrate our product into your routine with an intuitive and easy-to-use interface.",
-  //   link: "/transporter",
-  // },
   {
     icon: <AutoFixHighRoundedIcon />,
     title: "Manufacturer",
@@ -54,6 +47,13 @@ const items = [
     description:
       "Enjoy a meticulously crafted product where small touches make a significant impact on your overall experience.",
     link: "/distributor",
+  },
+  {
+    icon: <QueryStatsRoundedIcon />,
+    title: "Track Medicine",
+    description:
+      "Enjoy a meticulously crafted product where small touches make a significant impact on your overall experience.",
+    link: "/trackmed",
   },
 ];
 

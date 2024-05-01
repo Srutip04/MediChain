@@ -1,18 +1,19 @@
 // import { EthProvider } from "./contexts/EthContext";
 import React, { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import Web3 from "web3";
 import SupplyChain from "./contracts/SupplyChain.json";
 import LandingPage from "./components/Home/LandingPage";
 import Owner from "./entities/Owner/Owner";
+import Supplier from "./entities/Supplier/Supplier";
 import Manufacturer from "./entities/Manufacturer/Manufacturer";
 import ShipmentList from "./entities/Distributor/ShipmentList";
-import { Routes, Route } from "react-router-dom";
 import ReceiveShipment from "./entities/Retailer/ReceiveShipment";
+import TrackingDashboard from "./entities/Tracking Dashboard/TrackingDashboard";
 
 function App() {
   const [account, setAccount] = useState(null);
   const [supplyChain, setSupplyChain] = useState(null);
-  // const [identicon, setIdenticon] = useState(null);
   const [loading, setLoading] = useState(true);
   const [web3, setWeb3] = useState(null);
 
@@ -76,6 +77,12 @@ function App() {
             }
           />
           <Route
+            path="/supplier"
+            element={
+              <Supplier account={account} supplyChain={supplyChain} web3={web3} />
+            }
+          />
+          <Route
             path="/manufacturer"
             element={
               <Manufacturer
@@ -99,6 +106,16 @@ function App() {
             path="/retailer"
             element={
               <ReceiveShipment
+                account={account}
+                supplyChain={supplyChain}
+                web3={web3}
+              />
+            }
+          />
+          <Route
+            path="/trackmed"
+            element={
+              <TrackingDashboard
                 account={account}
                 supplyChain={supplyChain}
                 web3={web3}
