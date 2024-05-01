@@ -58,6 +58,7 @@ const ShipmentList = (props) => {
             <TableRow>
               <StyledTableCell>Shipment ID</StyledTableCell>
               <StyledTableCell>Product ID</StyledTableCell>
+              <StyledTableCell>Material ID</StyledTableCell>
               <StyledTableCell>From Address</StyledTableCell>
               <StyledTableCell>To Address</StyledTableCell>
               <StyledTableCell>Shipment Status</StyledTableCell>
