@@ -19,7 +19,7 @@ const InitiateShipment = (props) => {
 
      const handleInputChange = (e) => {
        if (e.target.id === "shipmentId") {
-         setProductId(e.target.value);
+         setShipmentId(e.target.value);
        } else if (e.target.id === "toAddress") {
          setToAddress(e.target.value);
        } 
@@ -27,7 +27,7 @@ const InitiateShipment = (props) => {
      const handleSubmit = async (e) => {
        e.preventDefault();
        const res = await supplyChain.methods
-         .initiateShipment(parseInt(shipmentId),toAddress)
+         .shipProduct(parseInt(shipmentId),toAddress)
          .send({ from: account });
          alert("Shipment Initiated");
          console.log("res:", res);

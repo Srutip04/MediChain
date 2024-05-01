@@ -9,20 +9,21 @@ function ShipmentItem({ shipment, onProcessShipment }) {
   };
 
   const getStatusText = (status) => {
+    console.log("Status:", status); // Add this line
     switch (status) {
-      case 0:
+      case '0':
         return "Not initiated";
-      case 1:
+      case '1':
         return "Shipped by Supplier";
-      case 2:
+      case '2':
         return "Received by Manufacturer";
-      case 3:
+      case '3':
         return "Shipped by Manufacturer";
-      case 4:
+      case '4':
         return "Received by Distributor";
-      case 5:
+      case '5':
         return "Delivered to Retailer";
-      case 6:
+      case '6':
           return "Delivered";
       default:
         return "Unknown";

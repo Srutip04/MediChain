@@ -73,14 +73,14 @@ const ReceiveMaterial = (props) => {
                 <TableCell>{material.supplier}</TableCell>
                 <TableCell>{material.manufacturer}</TableCell>
                 <TableCell>
-                  {material.manufacturer === account && (
+                  {/* {material.manufacturer == account && ( */}
                     <Button
                       variant="contained"
                       onClick={() => receiveMaterial(material.mid)}
                     >
                       Receive Material
                     </Button>
-                  )}
+                  {/* )} */}
                 </TableCell>
               </TableRow>
             ))}

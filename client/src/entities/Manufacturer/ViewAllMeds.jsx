@@ -71,7 +71,7 @@ const ViewAllMeds = (props) => {
                 <StyledTableCell component="th" scope="row">
                   {product.name}
                 </StyledTableCell>
-                <StyledTableCell align="right">
+                <StyledTableCell>
                   {product.batchNumber}
                 </StyledTableCell>
                 <StyledTableCell align="right">

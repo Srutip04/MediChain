@@ -17,6 +17,7 @@ const CreateMed = (props) => {
     const [manufacturingDate, setManufacturingDate] = useState("");
     const [expiryDate, setExpiryDate] = useState("");
     const [price, setPrice] = useState("");
+    const [shipmentId,setShipmentId] = useState("");
     console.log([account]);
     console.log("Check?");
     console.log([supplyChain]);
@@ -32,6 +33,8 @@ const CreateMed = (props) => {
         setExpiryDate(e.target.value);
       } else if (e.target.id === "price") {
         setPrice(e.target.value);
+      }else if (e.target.id === "shipid") {
+        setShipmentId(e.target.value);
       }
     };
 
@@ -44,7 +47,8 @@ const CreateMed = (props) => {
               parseInt(batchNumber),
               parseInt(manufacturingDate),
               parseInt(expiryDate),
-              parseInt(price)
+              parseInt(price),
+              parseInt(shipmentId)
             )
             .send({ from: account }); 
           alert("Medicine created successfully!");
@@ -54,6 +58,7 @@ const CreateMed = (props) => {
           setManufacturingDate("");
           setExpiryDate("");
           setPrice("");
+          setShipmentId("")
         } catch (error) {
           console.error("Error creating medicine:", error);
           alert("An error occurred while creating the medicine.");
@@ -99,6 +104,14 @@ const CreateMed = (props) => {
             <TextField
               id="price"
               label="Price"
+              variant="outlined"
+              type="number"
+              onChange={handleInputChange}
+            />
+            <br></br>
+            <TextField
+              id="shipid"
+              label="Shipment ID"
               variant="outlined"
               type="number"
               onChange={handleInputChange}

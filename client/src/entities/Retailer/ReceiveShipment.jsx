@@ -49,6 +49,28 @@ const ReceiveShipment = (props) => {
     }
   };
 
+  const getStatusText = (status) => {
+    console.log("Status:", status); // Add this line
+    switch (status) {
+      case '0':
+        return "Not initiated";
+      case '1':
+        return "Shipped by Supplier";
+      case '2':
+        return "Received by Manufacturer";
+      case '3':
+        return "Shipped by Manufacturer";
+      case '4':
+        return "Received by Distributor";
+      case '5':
+        return "Delivered to Retailer";
+      case '6':
+          return "Delivered";
+      default:
+        return "Unknown";
+    }
+  };
+
   return (
     <div>
       <h2>Shipment List</h2>
@@ -72,16 +94,10 @@ const ReceiveShipment = (props) => {
                 <TableCell>{shipment.productId}</TableCell>
                 <TableCell>{shipment.fromAddress}</TableCell>
                 <TableCell>{shipment.toAddress}</TableCell>
-                <TableCell>
-                  {shipment.shipmentStatus == 0
-                    ? "Not initiated"
-                    : shipment.shipmentStatus == 1
-                    ? "In transit"
-                    : "Delivered"}
-                </TableCell>
+                <TableCell>{getStatusText(shipment.shipmentStatus)}</TableCell>
                 <TableCell>{shipment.totalAmount}</TableCell>
                 <TableCell>
-                  {shipment.shipmentStatus == 1 && (
+                  {shipment.shipmentStatus == 5 && (
                     <Button
                       variant="contained"
                       onClick={() => receiveShipment(shipment.shipmentId)}
