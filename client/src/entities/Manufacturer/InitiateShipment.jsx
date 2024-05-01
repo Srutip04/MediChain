@@ -11,14 +11,14 @@ const InitiateShipment = (props) => {
    const [account] = useState(props.account);
    const [web3, setWeb3] = useState(props.web3);
    const [supplyChain] = useState(props.supplyChain);
-   const [productId, setProductId] = useState("");
+   const [shipmentId, setShipmentId] = useState("");
    const [toAddress, setToAddress] = useState("");
      console.log([account]);
      console.log("Check?");
      console.log([supplyChain]);
 
      const handleInputChange = (e) => {
-       if (e.target.id === "productId") {
+       if (e.target.id === "shipmentId") {
          setProductId(e.target.value);
        } else if (e.target.id === "toAddress") {
          setToAddress(e.target.value);
@@ -27,11 +27,11 @@ const InitiateShipment = (props) => {
      const handleSubmit = async (e) => {
        e.preventDefault();
        const res = await supplyChain.methods
-         .initiateShipment(parseInt(productId),toAddress)
+         .initiateShipment(parseInt(shipmentId),toAddress)
          .send({ from: account });
          alert("Shipment Initiated");
          console.log("res:", res);
-         setProductId("");
+         setShipmentId("");
          setToAddress("");
      };
     return (
@@ -43,8 +43,8 @@ const InitiateShipment = (props) => {
           </Typography>
           <form noValidate autoComplete="on">
             <TextField
-              id="productId"
-              label="Product ID"
+              id="shipmentId"
+              label="Shipment ID"
               variant="outlined"
               onChange={handleInputChange}
             />
