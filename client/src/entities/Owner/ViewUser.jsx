@@ -3,7 +3,10 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseLine";
+import CssBaseline from "@mui/material/CssBaseline";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+
 const ViewUser = (props) => {
   console.log("acc:", props.account);
   const [account] = useState(props.account);
@@ -28,28 +31,49 @@ const ViewUser = (props) => {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div>
-        <form noValidate autoComplete="on">
+      <Card style={{ margin: "20px auto", padding: "20px", maxWidth: 400 }}>
+        <CardContent>
+          <Typography variant="h5" component="h2">
+            Enter Account Address
+          </Typography>
           <TextField
             id="address"
             label="Account"
             variant="outlined"
+            fullWidth
+            style={{ margin: "10px 0" }}
             onChange={handleInputChange}
           />
-          <br></br>
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit}
+            fullWidth
+          >
             Submit
           </Button>
-        </form>
-      </div>
+        </CardContent>
+      </Card>
       {user && (
-        <div>
-          <h3>User Details</h3>
-          <p>User ID: {user.userId}</p>
-          <p>Address: {user.addr}</p>
-          <p>Name: {user.name}</p>
-          <p>Role: {user.role}</p>
-        </div>
+        <Card style={{ marginTop: 20,maxWidth: 400 }}>
+          <CardContent>
+            <Typography variant="h5" component="h2">
+              User Details
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              <b>User ID:</b> {user.userId}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              <b>Address:</b> {user.addr}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              <b>Name:</b> {user.name}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              <b>Role:</b> {user.role}
+            </Typography>
+          </CardContent>
+        </Card>
       )}
     </Container>
   );
