@@ -85,8 +85,8 @@ const TrackingDashboard = (props) => {
             <Typography>Material Name: {shipmentDetails.material.name}</Typography>
             <Typography>Shipment Status: {getStatusText(shipmentDetails.shipment.shipmentStatus)}</Typography>
             <Typography>Product Batch Number: {shipmentDetails.product.batchNumber}</Typography>
-            <Typography>Product Manufacturing Date: {shipmentDetails.product.manufacturingDate}</Typography>
-            <Typography>Product Expiry Date: {shipmentDetails.product.expiryDate}</Typography>
+            <Typography>Product Manufacturing Date:  {new Date(shipmentDetails.product.manufacturingDate * 1000).toLocaleDateString()} </Typography>
+            <Typography>Product Expiry Date: {new Date(shipmentDetails.product.expiryDate * 1000).toLocaleDateString()}</Typography>
             <Typography>Product Price: {shipmentDetails.product.price}</Typography>
             <Typography>Total Amount: {shipmentDetails.shipment.totalAmount}</Typography>
             <Typography>From Address: {shipmentDetails.shipment.fromAddress}</Typography>
