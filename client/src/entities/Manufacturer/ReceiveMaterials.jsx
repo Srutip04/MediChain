@@ -14,35 +14,43 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   color: theme.palette.common.white,
 }));
 
-const ReceiveMaterial = (props) => {
-  console.log("acc:", props.account);
+const ReceiveShipment = (props) => {
   const [account] = useState(props.account);
   const [web3, setWeb3] = useState(props.web3);
   const [supplyChain] = useState(props.supplyChain);
-  const [materials, setMaterials] = useState([]);
+  const [shipments, setShipments] = useState([]);
 
   useEffect(() => {
-    fetchMaterials();
-  }, [supplyChain]); // Fetch materials when contract changes
+    fetchShipments();
+  }, [supplyChain]); // Fetch shipments when contract changes
 
-  const fetchMaterials = async () => {
-    const materialCount = await supplyChain.methods.materialCnt().call();
-    const fetchedMaterials = [];
-    for (let i = 1; i <= materialCount; i++) {
-      const material = await supplyChain.methods.materials(i).call();
-      fetchedMaterials.push(material);
+  const fetchShipments = async () => {
+    try {
+      const shipmentCount = await supplyChain.methods.shipmentCnt().call();
+      const fetchedShipments = [];
+      for (let i = 1; i <= shipmentCount; i++) {
+        const shipment = await supplyChain.methods.shipments(i).call();
+        const material = await supplyChain.methods
+          .getMaterialDetails(shipment.materialId)
+          .call(); // Fetch material details
+        shipment.material = material; // Add material details to the shipment object
+        fetchedShipments.push(shipment);
+      }
+      setShipments(fetchedShipments);
+    } catch (error) {
+      console.error("Error fetching shipments:", error);
     }
-    setMaterials(fetchedMaterials);
   };
 
-  const receiveMaterial = async (materialId) => {
+  const receiveMaterial = async (shipmentId) => {
+    console.log(shipmentId)
     try {
       await supplyChain.methods
-        .receiveMaterial(materialId)
+        .receiveMaterial(shipmentId)
         .send({ from: account });
       alert("Material received successfully!");
       // Refresh material list after receiving
-      fetchMaterials();
+      fetchShipments();
     } catch (error) {
       console.error("Error receiving material:", error);
       alert("An error occurred while receiving the material.");
@@ -51,36 +59,32 @@ const ReceiveMaterial = (props) => {
 
   return (
     <div>
-      <h2>Material List</h2>
+      <h2>Shipment List</h2>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
+              <StyledTableCell>Shipment ID</StyledTableCell>
               <StyledTableCell>Material ID</StyledTableCell>
               <StyledTableCell>Name</StyledTableCell>
-              <StyledTableCell>Quantity</StyledTableCell>
               <StyledTableCell>Supplier</StyledTableCell>
-              <StyledTableCell>Manufacturer</StyledTableCell>
               <StyledTableCell>Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {materials.map((material) => (
-              <TableRow key={material.mid}>
-                <TableCell>{material.mid}</TableCell>
-                <TableCell>{material.name}</TableCell>
-                <TableCell>{material.quantity}</TableCell>
-                <TableCell>{material.supplier}</TableCell>
-                <TableCell>{material.manufacturer}</TableCell>
+            {shipments.map((shipment) => (
+              <TableRow key={shipment.shipmentId}>
+                <TableCell>{shipment.shipmentId}</TableCell>
+                <TableCell>{shipment.materialId}</TableCell>
+                <TableCell>{shipment.material.name}</TableCell>
+                <TableCell>{shipment.material.supplier}</TableCell>
                 <TableCell>
-                  {/* {material.manufacturer == account && ( */}
-                    <Button
-                      variant="contained"
-                      onClick={() => receiveMaterial(material.mid)}
-                    >
-                      Receive Material
-                    </Button>
-                  {/* )} */}
+                  <Button
+                    variant="contained"
+                    onClick={() => receiveMaterial(shipment.shipmentId)}
+                  >
+                    Receive Material
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -91,4 +95,4 @@ const ReceiveMaterial = (props) => {
   );
 };
 
-export default ReceiveMaterial;
+export default ReceiveShipment;
