@@ -1,68 +1,81 @@
 import React, { useState } from "react";
-// import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseLine";
+import CssBaseline from "@mui/material/CssBaseline";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 
 const InitiateShipment = (props) => {
-   const [account] = useState(props.account);
-   const [web3, setWeb3] = useState(props.web3);
-   const [supplyChain] = useState(props.supplyChain);
-   const [shipmentId, setShipmentId] = useState("");
-   const [toAddress, setToAddress] = useState("");
-     console.log([account]);
-     console.log("Check?");
-     console.log([supplyChain]);
+  const [account] = useState(props.account);
+  const [supplyChain] = useState(props.supplyChain);
+  const [shipmentId, setShipmentId] = useState("");
+  const [toAddress, setToAddress] = useState("");
 
-     const handleInputChange = (e) => {
-       if (e.target.id === "shipmentId") {
-         setShipmentId(e.target.value);
-       } else if (e.target.id === "toAddress") {
-         setToAddress(e.target.value);
-       } 
-     };
-     const handleSubmit = async (e) => {
-       e.preventDefault();
-       const res = await supplyChain.methods
-         .shipProduct(parseInt(shipmentId),toAddress)
-         .send({ from: account });
-         alert("Shipment Initiated");
-         console.log("res:", res);
-         setShipmentId("");
-         setToAddress("");
-     };
-    return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div>
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    if (id === "shipmentId") {
+      setShipmentId(value);
+    } else if (id === "toAddress") {
+      setToAddress(value);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await supplyChain.methods
+        .shipProduct(parseInt(shipmentId), toAddress)
+        .send({ from: account });
+      alert("Shipment Initiated");
+      console.log("res:", res);
+      setShipmentId("");
+      setToAddress("");
+    } catch (error) {
+      console.error("Error initiating shipment:", error);
+      alert("An error occurred while initiating the shipment.");
+    }
+  };
+
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Card style={{ marginTop: 20, padding: 20 }}>
+        <CardContent>
           <Typography component="h1" variant="h5">
             Initiate Shipment
           </Typography>
-          <form noValidate autoComplete="on">
+          <form noValidate autoComplete="on" onSubmit={handleSubmit}>
             <TextField
               id="shipmentId"
               label="Shipment ID"
               variant="outlined"
+              fullWidth
+              margin="normal"
               onChange={handleInputChange}
             />
-            <br></br>
             <TextField
               id="toAddress"
               label="To Address"
               variant="outlined"
+              fullWidth
+              margin="normal"
               onChange={handleInputChange}
             />
-            <br></br>
-            <Button variant="contained" color="primary" onClick={handleSubmit}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+            >
               Initiate Shipment
             </Button>
           </form>
-        </div>
-      </Container>
-    );
+        </CardContent>
+      </Card>
+    </Container>
+  );
 };
 
 export default InitiateShipment;
